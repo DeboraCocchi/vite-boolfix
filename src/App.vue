@@ -3,6 +3,7 @@ import {store} from './data/store'
 import axios from 'axios'
 import AppHeader from './components/AppHeader.vue'
 import AppMain from './components/AppMain.vue'
+import Card from './components/Card.vue'
 
 export default {
   name:'App',
@@ -13,7 +14,8 @@ export default {
   },
   components:{
     AppHeader,
-    AppMain
+    AppMain,
+    Card
   },
   methods:{
     getApiCall(){
@@ -29,7 +31,8 @@ export default {
       .catch( error =>{
         console.log(error);
       })
-  }
+    },
+    
   },
   mounted(){
     console.log('lanciata');
@@ -40,6 +43,7 @@ export default {
 </script>
 
 <template>
+
   <AppHeader @cercaserie="getApiCall"/>
   <AppMain />
 </template>

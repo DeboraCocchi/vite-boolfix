@@ -17,6 +17,7 @@ export default {
   <main>
     <div class="container dc-cont">
       <div class="row">
+        
         <Card v-for="movie in store.moviesList" :key="movie.id" :movie="movie"/>
 
         </div>
@@ -27,6 +28,7 @@ export default {
 
 
 <style lang="scss" scoped>
+@use '../styles/general';
   main{
     height:calc(100vh - 70px);
     width:100vw;
