@@ -1,0 +1,59 @@
+<script>
+export default {
+  name:'AppHeader'
+}
+</script>
+<template>
+  <header>
+    <div class="container-fluid h-100">
+      <div class="row align-items-center h-100 justify-content-between">
+        <div class="col-2 logo h-100 align-items-center">
+          <img src="/logo-boolflix.png" alt="Boolfix">
+        </div>
+        <div class="search-field col-4 d-flex">
+          <span class="d-flex align-items-center justify-content-center"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="search" id="boolsearch" name="boolsearch">
+          <select class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <option class="dropdown-item" selected value="">Choose category</option>
+          <option class="dropdown-item" value="movie">Film</option>
+          <option class="dropdown-item" value="TV">Serie TV</option>
+        </select>
+        </div>
+      </div>
+    
+    </div>
+  </header>
+</template>
+
+
+<style lang="scss" scoped>
+  @use '../styles/partials/variables.scss' as *;
+  header{
+    height:70px;
+    background-color: black;
+
+    .logo>img{
+      max-height:90%;
+    }
+    .search-field{
+      span{
+        background-color: $primary-darkgrey;
+        padding:10px;
+        color:white;
+      }
+      .dropdown-toggle{
+        background-color: $primary-red;
+        color:white;
+        outline:none;
+        border:none;
+        font-size:80%;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+      .input{
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+    }
+  }
+</style>

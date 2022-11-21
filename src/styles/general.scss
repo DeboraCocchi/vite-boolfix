@@ -1,0 +1,11 @@
+@use './partials/variables' as *;
+@import "@fontsource/bebas-neue";
+@import "@fontsource/montserrat";
+@import "/node_modules/bootstrap/scss/bootstrap"
+;
+@import "/node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+@import "/node_modules/flag-icons/css/flag-icons.min.css";
+
+img{
+  max-width:100%;
+}
