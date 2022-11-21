@@ -1,6 +1,12 @@
 <script>
+import {store} from '../data/store'
 export default {
-  name:'AppHeader'
+  name:'AppHeader',
+  data(){
+    return{
+      store
+    }
+  }
 }
 </script>
 <template>
@@ -12,9 +18,9 @@ export default {
         </div>
         <div class="search-field col-4 d-flex">
           <span class="d-flex align-items-center justify-content-center"><i class="fa-solid fa-magnifying-glass"></i></span>
-          <input type="search" id="boolsearch" name="boolsearch">
+          <input type="search" id="boolsearch" name="boolsearch" v-model="store.elementToSearch" @keyup.enter="$emit('cercaserie')">
           <select class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <option class="dropdown-item" selected value="">Choose category</option>
+          <option class="dropdown-item" selected value="">Category</option>
           <option class="dropdown-item" value="movie">Film</option>
           <option class="dropdown-item" value="TV">Serie TV</option>
         </select>

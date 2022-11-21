@@ -1,19 +1,46 @@
 <script>
+import {store} from './data/store'
 import axios from 'axios'
 import AppHeader from './components/AppHeader.vue'
 import AppMain from './components/AppMain.vue'
 
 export default {
   name:'App',
+  data(){
+    return{
+      store
+    }
+  },
   components:{
     AppHeader,
     AppMain
+  },
+  methods:{
+    getApiCall(){
+      store.isLoaded = false;
+      store.moviesList=[];
+      console.log(axios.get(store.apiUrlMovie+store.elementToSearch))
+      axios.get(store.apiUrlMovie+store.elementToSearch)
+      .then( result =>{
+         store.moviesList = result.data.results;
+         console.log(store.moviesList);
+         store.isLoaded = true;
+      })
+      .catch( error =>{
+        console.log(error);
+      })
   }
+  },
+  mounted(){
+    console.log('lanciata');
+    this.getApiCall()
+  }
+  
 }
 </script>
 
 <template>
-  <AppHeader />
+  <AppHeader @cercaserie="getApiCall"/>
   <AppMain />
 </template>
 
