@@ -9,7 +9,7 @@ export default {
   data(){
     return{
       store,
-      isPresent:''
+      isPresent:true
     }
   },
   methods:{
@@ -28,7 +28,7 @@ export default {
     },
     getFlag(value){
       let flag;
-      let flagPath = '/node_modules/flag-icons/flags/1x1/';
+      let flagPath = '/node_modules/flag-icons/flags/4x3/';
       switch(value){
         case 'en':
           flag = 'us.svg';
@@ -55,7 +55,7 @@ export default {
           flag = 'cn.svg';
           break;
         case 'ru':
-          flag = '/node_modules/flag-icons/flags/1x1/ru.svg';
+          flag = 'ru.svg';
           break;
         default:
           flag='';
@@ -67,25 +67,41 @@ export default {
 }
 </script>
 <template>
-  <div class="card col-2" v-show="elem.poster_path">
-    
-  <img :src="`${store.imgUrl}${elem.poster_path}`" class="card-img-top" :alt="elem.title">
-  <div class="card-body">
-    <p class="card-text">{{elem.title}}</p>
-    <p class="card-text">Lingua originale:
-      <img v-if="isPresent=true"
-      @error="isPresent=false" @load="isPresent=true"
-      :src="getFlag(elem.original_language)" :alt="elem.original_language"/>
-      <span v-else>{{elem.original_language}}</span>
+  <div class="dc-card card" v-show="elem.poster_path">
+    <img :src="`${store.imgUrl}${elem.poster_path}`" class="card-img-top" :alt="elem.title">
+    <div class="card-body">
+      <h4 class="card-text">{{elem.title||elem.name}}</h4>
+      <p class="card-sum">{{elem.overview}}</p>
+      <p class="card-text">Lingua originale:
+        <img
+        v-if="isPresent===true"
+        @load="isPresent=true"
+        @error="isPresent=false"
+        class="mini-flag"
+        :src="getFlag(elem.original_language)"
+        />
+        <span v-else>{{elem.original_language}}</span>
       </p>
-    <p class="card-text" v-html="rating(elem.vote_average)"></p>
-  </div>
+      <p class="card-text" v-html="rating(elem.vote_average)"></p>
+    </div>
 </div>
 </template>
 
 
 <style lang="scss" scoped>
   @use '../styles/general';
+  .dc-card[data-v-c6c3362a]{
+    width: calc(100% / 5)
+  }
+  .mini-flag{
+    max-height:15px;
+    border-radius:2px;
+  }
+  .card-sum{
+    overflow-y:auto;
+    overflow-x:hidden;
+    max-height:50%;
+  }
 
  
 </style>
