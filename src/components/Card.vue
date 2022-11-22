@@ -21,7 +21,7 @@ export default {
           stars.push(`<i class="fa-solid fa-star" style="color:gold;"></i>`);
         };
         for(let j = (5 - newRating); j >= 1; j--){
-          stars.push(`<i class="fa-regular fa-star"></i>`);
+          stars.push(`<i class="fa-regular fa-star" style="color:$primary-darkgrey"></i>`);
         }
         return stars.join('');
       }else{return 'Nessuna valutazione'}
@@ -70,7 +70,7 @@ export default {
   <div class="dc-card card" v-show="elem.poster_path">
     <img :src="`${store.imgUrl}${elem.poster_path}`" class="dc-card-img dc-card-front" :alt="elem.title">
     <div class="dc-card-overlay"></div>
-    <div class="card-body dc-card-back d-none">
+    <div class="dc-card-back">
       <h4 class="card-text">{{elem.title||elem.name}}</h4>
       <p class="card-sum">{{elem.overview}}</p>
       <p class="card-text">Lingua originale:
@@ -96,7 +96,6 @@ export default {
   .dc-card[data-v-c6c3362a]{
     width: calc(100% / 5);
     max-height:400px;
-    aspect-ratio: 4 / 5;
     position:relative;
     padding:0;
     .dc-card-img{
@@ -146,17 +145,46 @@ export default {
   }
   .dc-card-img:hover ~ &{
     opacity:1;
-  }
-  }
-  .mini-flag{
-    max-height:15px;
-    border-radius:2px;
-  }
-  .card-sum{
-    overflow-y:auto;
-    overflow-x:hidden;
-    max-height:50%;
-  }
+  }}
+  .dc-card-back{
+    color:white;
+    padding:12px;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index: 1;
+    padding: 12px;
+    line-height: 1.4;
+    opacity: 0;
+    visibility: hidden;
+    box-sizing: border-box;
+    pointer-events: none;
+    transition: 0s;
+    .dc-card-overlay:hover ~ & {
+      opacity: 1;
+      visibility: visible;
+      transition: 0.2s 0.3s;
+    }
+    h4 {
+      margin: 0;
+      margin-bottom: 12px;
+      font-size:15px;
+    }
+    p{
+      font-size:12px;
+    }
+    .mini-flag{
+      max-height:15px;
+      border-radius:2px;
+    }
+    .card-sum{
+      overflow-y:auto;
+      overflow-x:hidden;
+      max-height:250px;
+    }
+}
+  
+  
 
  
 </style>
