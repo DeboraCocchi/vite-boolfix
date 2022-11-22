@@ -1,6 +1,6 @@
 @use './partials/variables' as *;
-@import "@fontsource/bebas-neue";
-@import "@fontsource/montserrat";
+@import "@fontsource/bebas-neue/index.css";
+@import "@fontsource/montserrat/index.css";
 @import "/node_modules/bootstrap/scss/bootstrap"
 ;
 @import "/node_modules/@fortawesome/fontawesome-free/css/all.min.css";
@@ -8,4 +8,10 @@
 
 img{
   max-width:100%;
+}
+h1,h2{
+  font-family: 'Bebas Neue';
+  font-weight:500;
+  text-transform:uppercase;
+  color: $primary-red;
 }

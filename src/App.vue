@@ -19,13 +19,19 @@ export default {
   },
   methods:{
     firstLaunch(){
-      let moviesFound = axios.get(store.trendUrl+store.apiKey+'&language=it-IT',
+      //in attesa di trovare un modo più snello per scriverlo
+      axios.get(store.trendUrl+'movie/week?api_key='+store.apiKey+'&language=it-IT',
       {params: {media_type:'movie'}})
-      let seriesFound = axios.get(store.trendUrl+store.apiKey+'&language=it-IT',
-      {params: {media_type:'tv'}})
       .then(result => {
         store.movie = result.data.results
         console.log(store.movie);
+      })
+      .catch( error =>{
+        console.log(error);
+      })
+      axios.get(store.trendUrl+'tv/week?api_key='+store.apiKey+'&language=it-IT',
+      {params: {media_type:'tv'}})
+      .then(result => {
         store.tv = result.data.results
         console.log(store.tv);
       })
@@ -44,8 +50,9 @@ export default {
     },
     getApiCall(type){
       store.isLoaded = false;
+      console.log(store.typeOf);
       store[type]=[];
-        axios.get(store.apiUrl+store.typeOf+'?api_key='+store.apiKey+'&query='+store.elementToSearch+'&language=it-IT')
+        axios.get(store.apiUrl+type+'?api_key='+store.apiKey+'&query='+store.elementToSearch+'&language=it-IT')
       .then( result =>{
         store[type] = result.data.results;
         console.log(store[type]);
@@ -66,9 +73,8 @@ export default {
 
 <template>
 
-  <AppHeader @cercaserie="getApiCall" @changeType="getApiCall"/>
-  <AppMain title="Film"/>
-  <AppMain title="Serie TV"/>
+  <AppHeader @cercaserie="showResults" @changeType="showResults"/>
+  <AppMain/>
 </template>
 
 
