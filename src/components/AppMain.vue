@@ -3,6 +3,9 @@ import {store} from '../data/store'
 import Card from './Card.vue'
 export default {
   name:'AppMain',
+  props:{
+    title:String
+  },
   components:{
     Card
   },

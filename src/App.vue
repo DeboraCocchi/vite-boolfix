@@ -18,25 +18,47 @@ export default {
     Card
   },
   methods:{
-    getApiCall(){
-      store.isLoaded = false;
-      store.moviesList=[];
-      console.log(axios.get(store.apiUrlMovie+store.elementToSearch))
-      axios.get(store.apiUrlMovie+store.elementToSearch)
-      .then( result =>{
-         store.moviesList = result.data.results;
-         console.log(store.moviesList);
-         store.isLoaded = true;
+    firstLaunch(){
+      let moviesFound = axios.get(store.trendUrl+store.apiKey+'&language=it-IT',
+      {params: {media_type:'movie'}})
+      let seriesFound = axios.get(store.trendUrl+store.apiKey+'&language=it-IT',
+      {params: {media_type:'tv'}})
+      .then(result => {
+        store.movie = result.data.results
+        console.log(store.movie);
+        store.tv = result.data.results
+        console.log(store.tv);
       })
       .catch( error =>{
         console.log(error);
       })
+      store.isLoaded=true;
     },
-    
+    showResults(){
+        if(store.typeOf===''){
+          this.getApiCall('movie')
+          this.getApiCall('tv')
+        }else{
+          this.getApiCall(store.typeOf)
+        }
+    },
+    getApiCall(type){
+      store.isLoaded = false;
+      store[type]=[];
+        axios.get(store.apiUrl+store.typeOf+'?api_key='+store.apiKey+'&query='+store.elementToSearch+'&language=it-IT')
+      .then( result =>{
+        store[type] = result.data.results;
+        console.log(store[type]);
+        store.isLoaded = true;
+      })
+      .catch( error =>{
+        console.log(error);
+      })
+    }
   },
-  mounted(){
+  created(){
     console.log('lanciata');
-    this.getApiCall()
+    this.firstLaunch();
   }
   
 }
@@ -44,8 +66,9 @@ export default {
 
 <template>
 
-  <AppHeader @cercaserie="getApiCall"/>
-  <AppMain />
+  <AppHeader @cercaserie="getApiCall" @changeType="getApiCall"/>
+  <AppMain title="Film"/>
+  <AppMain title="Serie TV"/>
 </template>
 
 
