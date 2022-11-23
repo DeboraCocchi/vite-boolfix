@@ -76,19 +76,34 @@ export default {
 <template>
 
 
-  <!-- codice di prova per malfunzionamento overflow
-    <div class="mia-card">
-    
+  <!-- codice di prova per malfunzionamento overflow--->
+  <div class="mia-card">
+  
+    <img v-if="elem.poster_path" :src="store.imgUrl+elem.poster_path" class="dc-card-img dc-card-front" :alt="elem.title">
+    <img v-else src="../assets/placeholder.png" class="dc-card-img dc-card-front" :alt="elem.title">
+  
+
     <div class="info-container">
       <h4 class="card-text">{{elem.title||elem.name}}</h4>
       <p class="mia-sum">{{elem.overview}}</p>
+      <p class="card-text">Lingua originale:
+        <img
+        v-if="isPresent===true"
+        @load="isPresent=true"
+        @error="isPresent=false"
+        class="mini-flag"
+        :src="getFlag(elem.original_language)"
+        />
+        <span v-else>{{elem.original_language}}</span>
+      </p>
+      <p class="card-text" v-html="rating(elem.vote_average)"></p>
     </div>
     
     
-  </div>  -->
+  </div>
 
 
-  <div class="dc-card card">
+  <!-- <div class="dc-card card">
     <img v-if="elem.poster_path" :src="store.imgUrl+elem.poster_path" class="dc-card-img dc-card-front" :alt="elem.title">
     <img v-else src="../assets/placeholder.png" class="dc-card-img dc-card-front" :alt="elem.title">
     
@@ -108,7 +123,7 @@ export default {
       </p>
       <p class="card-text" v-html="rating(elem.vote_average)"></p>
     </div>
-  </div>
+  </div> -->
 </template>
 
 
@@ -118,105 +133,46 @@ export default {
 
   .mia-card{
     width: calc(100% / 5);
-    height:18vh;
-    background-color: antiquewhite;
-    margin: 3px;
-    border:1px solid red;
-    .mia-sum{
-      overflow-y:scroll;
-      height:30%;
-      max-height:200px;
-    }
-  }
-  .dc-card[data-v-c6c3362a]{
-    width: calc(100% / 5);
-    max-height:400px;
+    max-height:450px;
     position:relative;
     padding:0;
-    border:none;
-    
-    .dc-card-img{
-      height:100%;
-      width:100%;
+    transition:all 0.5s ease-in;
+    overflow: hidden;
+    &>img{
+      max-height:100%;
+      max-width:100%;
       object-fit: cover;
       border-radius:5px;
-    }
-  }
-  .dc-card-overlay{
-    opacity: 0;
-    border:1px solid $primary-red;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 10vh;
-    height:10vh;
-    background-color: rgba(0,0,0,0.9);
-    color:white;
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(#000000, 0.2);
-    transition: 0.5s;
-    cursor: pointer;
-    &::before {
-      content: "\f129";
-      font-size: 1.6rem;
-      font-family: "Font Awesome 5 Free"; 
-      font-weight: 900;
-    }
-    &:hover,
-    &:focus {
-      bottom: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      box-shadow: none;
-      border-radius: 0;
-      opacity: 0.95;
-      border:none; 
-    &::before {
-      content: none;
-    }
-  }
-  .dc-card-img:hover ~ &{
-    opacity:1;
-  }}
-  .dc-card-back{
-    color:white;
-    height:100%;
-    padding:12px;
-    position:absolute;
-    top:0;
-    left:0;
-    padding: 12px;
-    line-height: 1.4; 
-    display:none;
-    box-sizing: border-box;
-    pointer-events: none;
-    transition: 0s;
-    
-    .dc-card-overlay:hover ~ & {
-      display:block;
-      transition: 0.2s 0.8s;
-    }
-    h4 {
+      transition:all 0.5s ease-in-out;}
+    .info-container{
+      background-color: rgba(0,0,0,0.75);
+      color:white;
+      position:absolute;
+      opacity:0;
+      height:100%;
+      width:100%;
+      top:0;
+      left:0;
+      padding:12px;
+      font-size:90%;
+      transition:all 0.5s ease-in-out;
+      h4 {
       margin: 0;
       margin-bottom: 12px;
       font-size:18px;
-    }
-    p{
-      font-size:12px;
-    }
-    .mini-flag{
-      max-height:15px;
-      border-radius:2px;
-    }
-    .card-sum{
+      }
+      p{
+        font-size:12px;
+      }
+      .mini-flag{
+        max-height:15px;
+        border-radius:2px;
+      }
+      .mia-sum{
       overflow-y:auto;
       height:50%;
       max-height:200px;
-       &::-webkit-scrollbar{
+      &::-webkit-scrollbar{
        width: 5px;
        background-color: rgba(73, 71, 71, 0.725);
        border-radius:2px;
@@ -224,12 +180,16 @@ export default {
        &::-webkit-scrollbar-thumb{
        background:$primary-red; 
        border-radius:2px;
-     }
+      }
     }
-    
-}
-  
-  
-
- 
+    }
+  }
+  .mia-card:hover>.info-container{
+    opacity:1;
+  }
+  .mia-card:hover>img{
+    transform:scale(110%);
+    height:100%;
+    width:100%;
+  }
 </style>

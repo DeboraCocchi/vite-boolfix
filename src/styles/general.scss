@@ -20,3 +20,7 @@ h1,h2{
   text-transform:uppercase;
   color: $primary-red;
 }
+
+.pointer-events{
+  pointer-events: all !important;
+}
