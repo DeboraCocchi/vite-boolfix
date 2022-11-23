@@ -35,11 +35,34 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../styles/general';
+@use '../styles/partials/variables.scss' as *;
+
   main{
     height:calc(100vh - 70px);
     width:100vw;
     overflow-y: auto;
-    background:linear-gradient(45deg, black, grey);
+    &::-webkit-scrollbar{
+      width: 8px;
+      background-color: rgba(73, 71, 71, 0.725);
+      border-radius: 3px;
+      }
+      &::-webkit-scrollbar-thumb{
+      background:$primary-red; 
+      border-radius:3px;
+    }
+    .dc-cont>.row{
+      margin-bottom:15px;
+      padding:12px;
+    }
+  }
+  h1{
+    font-size: 4rem;
+    margin:15px 0;
+    padding:0;
+  }
+  h2{
+    font-size: 2.5rem;
+    margin:18px 0 15px;
+    padding:0;
   }
 </style>

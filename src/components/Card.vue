@@ -61,14 +61,37 @@ export default {
           flag='';
         }
         return flagPath+flag;
+    },
+    getImg(el){
+      if(el.poster_path!==0){
+        return `${store.imgUrl}${el.poster_path}`
+      }else{
+        return '../assets/placeholder.png'
+      }
     }
 
   }
 }
 </script>
 <template>
-  <div class="dc-card card" v-show="elem.poster_path">
-    <img :src="`${store.imgUrl}${elem.poster_path}`" class="dc-card-img dc-card-front" :alt="elem.title">
+
+
+  <!-- codice di prova per malfunzionamento overflow
+    <div class="mia-card">
+    
+    <div class="info-container">
+      <h4 class="card-text">{{elem.title||elem.name}}</h4>
+      <p class="mia-sum">{{elem.overview}}</p>
+    </div>
+    
+    
+  </div>  -->
+
+
+  <div class="dc-card card">
+    <img v-if="elem.poster_path" :src="store.imgUrl+elem.poster_path" class="dc-card-img dc-card-front" :alt="elem.title">
+    <img v-else src="../assets/placeholder.png" class="dc-card-img dc-card-front" :alt="elem.title">
+    
     <div class="dc-card-overlay"></div>
     <div class="dc-card-back">
       <h4 class="card-text">{{elem.title||elem.name}}</h4>
@@ -85,7 +108,7 @@ export default {
       </p>
       <p class="card-text" v-html="rating(elem.vote_average)"></p>
     </div>
-</div>
+  </div>
 </template>
 
 
@@ -93,15 +116,30 @@ export default {
   @use '../styles/general';
   @use '../styles/partials/variables' as *;
 
+  .mia-card{
+    width: calc(100% / 5);
+    height:18vh;
+    background-color: antiquewhite;
+    margin: 3px;
+    border:1px solid red;
+    .mia-sum{
+      overflow-y:scroll;
+      height:30%;
+      max-height:200px;
+    }
+  }
   .dc-card[data-v-c6c3362a]{
     width: calc(100% / 5);
     max-height:400px;
     position:relative;
     padding:0;
+    border:none;
+    
     .dc-card-img{
       height:100%;
       width:100%;
       object-fit: cover;
+      border-radius:5px;
     }
   }
   .dc-card-overlay{
@@ -113,18 +151,17 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0,0,0,0.8);
+    width: 10vh;
+    height:10vh;
+    background-color: rgba(0,0,0,0.9);
     color:white;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(#000000, 0.2);
     transition: 0.5s;
     cursor: pointer;
-
     &::before {
       content: "\f129";
-      font-size: 16px;
+      font-size: 1.6rem;
       font-family: "Font Awesome 5 Free"; 
       font-weight: 900;
     }
@@ -137,8 +174,7 @@ export default {
       box-shadow: none;
       border-radius: 0;
       opacity: 0.95;
-      border:none;
-    
+      border:none; 
     &::before {
       content: none;
     }
@@ -148,27 +184,26 @@ export default {
   }}
   .dc-card-back{
     color:white;
+    height:100%;
     padding:12px;
     position:absolute;
     top:0;
     left:0;
-    z-index: 1;
     padding: 12px;
-    line-height: 1.4;
-    opacity: 0;
-    visibility: hidden;
+    line-height: 1.4; 
+    display:none;
     box-sizing: border-box;
     pointer-events: none;
     transition: 0s;
+    
     .dc-card-overlay:hover ~ & {
-      opacity: 1;
-      visibility: visible;
-      transition: 0.2s 0.3s;
+      display:block;
+      transition: 0.2s 0.8s;
     }
     h4 {
       margin: 0;
       margin-bottom: 12px;
-      font-size:15px;
+      font-size:18px;
     }
     p{
       font-size:12px;
@@ -179,9 +214,19 @@ export default {
     }
     .card-sum{
       overflow-y:auto;
-      overflow-x:hidden;
-      max-height:250px;
+      height:50%;
+      max-height:200px;
+       &::-webkit-scrollbar{
+       width: 5px;
+       background-color: rgba(73, 71, 71, 0.725);
+       border-radius:2px;
+       }
+       &::-webkit-scrollbar-thumb{
+       background:$primary-red; 
+       border-radius:2px;
+     }
     }
+    
 }
   
   
