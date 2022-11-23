@@ -75,7 +75,6 @@ export default {
 </script>
 <template>
 
-
   <!-- codice di prova per malfunzionamento overflow--->
   <div class="mia-card">
   
@@ -85,8 +84,8 @@ export default {
 
     <div class="info-container">
       <h4 class="card-text">{{elem.title||elem.name}}</h4>
-      <p class="mia-sum">{{elem.overview}}</p>
-      <p class="card-text">Lingua originale:
+      <p class="mia-sum mt-3">{{elem.overview}}</p>
+      <p class="card-text mt-3">Lingua originale:
         <img
         v-if="isPresent===true"
         @load="isPresent=true"
@@ -98,32 +97,7 @@ export default {
       </p>
       <p class="card-text" v-html="rating(elem.vote_average)"></p>
     </div>
-    
-    
   </div>
-
-
-  <!-- <div class="dc-card card">
-    <img v-if="elem.poster_path" :src="store.imgUrl+elem.poster_path" class="dc-card-img dc-card-front" :alt="elem.title">
-    <img v-else src="../assets/placeholder.png" class="dc-card-img dc-card-front" :alt="elem.title">
-    
-    <div class="dc-card-overlay"></div>
-    <div class="dc-card-back">
-      <h4 class="card-text">{{elem.title||elem.name}}</h4>
-      <p class="card-sum">{{elem.overview}}</p>
-      <p class="card-text">Lingua originale:
-        <img
-        v-if="isPresent===true"
-        @load="isPresent=true"
-        @error="isPresent=false"
-        class="mini-flag"
-        :src="getFlag(elem.original_language)"
-        />
-        <span v-else>{{elem.original_language}}</span>
-      </p>
-      <p class="card-text" v-html="rating(elem.vote_average)"></p>
-    </div>
-  </div> -->
 </template>
 
 
@@ -139,8 +113,8 @@ export default {
     transition:all 0.5s ease-in;
     overflow: hidden;
     &>img{
-      max-height:100%;
-      max-width:100%;
+      height:100%;
+      width:100%;
       object-fit: cover;
       border-radius:5px;
       transition:all 0.5s ease-in-out;}
@@ -155,17 +129,19 @@ export default {
       left:0;
       padding:12px;
       font-size:90%;
+      overflow-y:auto;
       transition:all 0.5s ease-in-out;
       h4 {
-      margin: 0;
-      margin-bottom: 12px;
-      font-size:18px;
+      margin-bottom: 6px;
+      font-size:1.2rem;
       }
       p{
-        font-size:12px;
+        font-size:0.8rem;
+        line-height: 0.8rem;
+        margin-bottom: 10px;
       }
       .mini-flag{
-        max-height:15px;
+        max-height:13px;
         border-radius:2px;
       }
       .mia-sum{

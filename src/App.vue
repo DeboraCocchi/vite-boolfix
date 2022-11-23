@@ -9,7 +9,8 @@ export default {
   name:'App',
   data(){
     return{
-      store
+      store,
+      title:''
     }
   },
   components:{
@@ -24,7 +25,6 @@ export default {
       {params: {media_type:'movie'}})
       .then(result => {
         store.movie = result.data.results
-        console.log(store.movie);
       })
       .catch( error =>{
         console.log(error);
@@ -33,12 +33,12 @@ export default {
       {params: {media_type:'tv'}})
       .then(result => {
         store.tv = result.data.results
-        console.log(store.tv);
       })
       .catch( error =>{
         console.log(error);
       })
       store.isLoaded=true;
+      this.title='In tendenza'
     },
     showResults(){
         if(store.typeOf===''){
@@ -47,15 +47,14 @@ export default {
         }else{
           this.getApiCall(store.typeOf)
         }
+        this.title='Risultati della ricerca'
     },
     getApiCall(type){
       store.isLoaded = false;
-      console.log(store.typeOf);
       store[type]=[];
         axios.get(store.apiUrl+type+'?api_key='+store.apiKey+'&query='+store.elementToSearch+'&language=it-IT')
       .then( result =>{
         store[type] = result.data.results;
-        console.log(store[type]);
         store.isLoaded = true;
       })
       .catch( error =>{
@@ -72,12 +71,19 @@ export default {
 </script>
 
 <template>
-
+  
   <AppHeader @cercaserie="showResults" @changeType="showResults"/>
+  <h1>{{title}}</h1>
   <AppMain/>
 </template>
 
 
 <style lang="scss">
   @use './styles/general.scss';
+
+  h1{
+    font-size:3.5rem;
+    margin:10px auto 0;
+    text-align:center;
+  }
 </style>
